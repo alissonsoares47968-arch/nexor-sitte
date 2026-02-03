@@ -1,4 +1,3 @@
-// Toast
 function showToast(msg){
   const t = document.getElementById('toast');
   if(!t) return;
@@ -8,7 +7,6 @@ function showToast(msg){
   window.__toast = setTimeout(()=> t.style.display='none', 1700);
 }
 
-// Copy helper
 async function copyText(elId, okMsg){
   const el = document.getElementById(elId);
   if(!el) return;
@@ -22,7 +20,6 @@ async function copyText(elId, okMsg){
   }
 }
 
-// Scroll reveal
 function initReveal(){
   const items = Array.from(document.querySelectorAll('.reveal'));
   const io = new IntersectionObserver((entries) => {
@@ -33,17 +30,15 @@ function initReveal(){
       }
     });
   }, { threshold: 0.12 });
-
   items.forEach(el => io.observe(el));
 }
 
-// Countdown (urgência)
 function initCountdown(){
   const el = document.getElementById('countdown');
   if(!el) return;
 
-  // Ajuste aqui a data/hora final da promo (horário de Brasília):
-  // Formato: "2026-02-10T23:59:59-03:00"
+  // Ajuste o fim da promo aqui no HTML (data-ends-at), ex:
+  // data-ends-at="2026-02-10T23:59:59-03:00"
   const endsAt = el.getAttribute('data-ends-at') || "2026-02-10T23:59:59-03:00";
   const end = new Date(endsAt).getTime();
 
@@ -72,7 +67,6 @@ function initCountdown(){
     if(S) S.textContent = pad(s);
 
     if(end - now <= 0){
-      showToast('Promo encerrada');
       clearInterval(window.__cd);
     }
   }
@@ -85,4 +79,3 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initCountdown();
 });
-
