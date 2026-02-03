@@ -59,7 +59,6 @@
             <span>Ativação <b>por ticket</b></span>
           </div>
 
-          <!-- Contagem regressiva: ajuste a data aqui -->
           <div class="countdown reveal" id="countdown" data-ends-at="2026-02-10T23:59:59-03:00">
             <div class="tbox"><div class="n" id="cd_d">00</div><div class="l">dias</div></div>
             <div class="tbox"><div class="n" id="cd_h">00</div><div class="l">horas</div></div>
@@ -181,72 +180,35 @@
     </div>
   </div>
 
- <div id="depoimentos" class="section">
-  <div class="container">
-    <h2 class="section-title reveal">Depoimentos</h2>
-    <p class="section-sub reveal">
-      Feedbacks em rotação automática (20 avaliações). Você pode editar os textos depois.
-    </p>
-
-    <div class="panel reveal">
-      <div class="panel-inner">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
-          <div class="pill"><span class="dot"></span> Avaliações reais (modelo)</div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn btn-small" id="tPrev">← Anterior</button>
-            <button class="btn btn-small btn-primary" id="tNext">Próxima →</button>
-          </div>
-        </div>
-
-        <div style="height:14px"></div>
-
-        <!-- Carrossel -->
-        <div id="tCarousel" style="position:relative; overflow:hidden;">
-          <div id="tTrack" style="display:flex; gap:14px; transition: transform .55s ease; will-change: transform;">
-            <!-- Slides injetados pelo JS -->
-          </div>
-        </div>
-
-        <div style="height:12px"></div>
-
-        <!-- Indicadores -->
-        <div id="tDots" style="display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap;"></div>
-
-        <div style="height:10px"></div>
-
-        <div class="mini" style="text-align:center;">
-          Dica: quando você tiver prints/feedback real, eu adapto para “verificado” com badge.
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+  <!-- ===== Depoimentos Pro ===== -->
+  <div id="depoimentos" class="section">
     <div class="container">
       <h2 class="section-title reveal">Depoimentos</h2>
-      <p class="section-sub reveal">Você pode trocar depois por feedback real/prints. Layout já premium.</p>
+      <p class="section-sub reveal">
+        Avaliações em rotação automática (20 feedbacks). Pausa ao passar o mouse.
+      </p>
 
-      <div class="grid-3">
-        <div class="card reveal">
-          <div class="stars">★★★★★</div>
-          <blockquote class="quote">
-            “O visual ficou muito premium. Passa confiança e ficou bem mais organizado.”
-            <div class="who">— Cliente (exemplo)</div>
-          </blockquote>
-        </div>
-        <div class="card reveal">
-          <div class="stars">★★★★★</div>
-          <blockquote class="quote">
-            “Fluxo de compra simples e ativação rápida. Parece produto profissional.”
-            <div class="who">— Cliente (exemplo)</div>
-          </blockquote>
-        </div>
-        <div class="card reveal">
-          <div class="stars">★★★★★</div>
-          <blockquote class="quote">
-            “Suporte resolveu tudo no ticket. Vale muito pelo preço mensal.”
-            <div class="who">— Cliente (exemplo)</div>
-          </blockquote>
+      <div class="panel reveal">
+        <div class="panel-inner">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div class="pill"><span class="dot"></span> Experiência premium • Feedbacks</div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn btn-small" id="tPrev">← Anterior</button>
+              <button class="btn btn-small btn-primary" id="tNext">Próxima →</button>
+            </div>
+          </div>
+
+          <div style="height:14px"></div>
+
+          <div id="tCarousel" class="t-wrap">
+            <div id="tTrack" class="t-track"></div>
+          </div>
+
+          <div id="tDots" class="t-dots"></div>
+
+          <div class="mini" style="text-align:center; margin-top:10px;">
+            Quer deixar “real oficial”? Depois você me manda os prints e eu adapto como “verificado”.
+          </div>
         </div>
       </div>
     </div>
@@ -302,4 +264,3 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
-
