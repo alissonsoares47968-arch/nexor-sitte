@@ -181,7 +181,47 @@
     </div>
   </div>
 
-  <div id="depoimentos" class="section">
+ <div id="depoimentos" class="section">
+  <div class="container">
+    <h2 class="section-title reveal">Depoimentos</h2>
+    <p class="section-sub reveal">
+      Feedbacks em rotação automática (20 avaliações). Você pode editar os textos depois.
+    </p>
+
+    <div class="panel reveal">
+      <div class="panel-inner">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+          <div class="pill"><span class="dot"></span> Avaliações reais (modelo)</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-small" id="tPrev">← Anterior</button>
+            <button class="btn btn-small btn-primary" id="tNext">Próxima →</button>
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <!-- Carrossel -->
+        <div id="tCarousel" style="position:relative; overflow:hidden;">
+          <div id="tTrack" style="display:flex; gap:14px; transition: transform .55s ease; will-change: transform;">
+            <!-- Slides injetados pelo JS -->
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <!-- Indicadores -->
+        <div id="tDots" style="display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap;"></div>
+
+        <div style="height:10px"></div>
+
+        <div class="mini" style="text-align:center;">
+          Dica: quando você tiver prints/feedback real, eu adapto para “verificado” com badge.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     <div class="container">
       <h2 class="section-title reveal">Depoimentos</h2>
       <p class="section-sub reveal">Você pode trocar depois por feedback real/prints. Layout já premium.</p>
@@ -262,3 +302,4 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
+
