@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Checkout — Nexor Premium</title>
+  <meta name="description" content="Checkout Pix do Nexor Premium com QR e copia e cola."/>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <div class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a class="brand" href="index.html">
+          <div class="logo"><img src="bot.png" alt="Nexor Premium"></div>
+          <div>Nexor Premium</div>
+        </a>
+
+        <div class="nav-cta">
+          <a class="btn btn-small btn-ghost" href="como-ativar.html">Como ativar</a>
+          <a class="btn btn-small btn-primary" href="https://discord.gg/PcBawDgXRW" target="_blank" rel="noreferrer">Abrir ticket</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="container">
+      <div class="pill"><span class="dot"></span> Checkout Pix • Ativação via ticket</div>
+      <h1 style="margin-top:14px">Checkout</h1>
+      <p>Faça o Pix e depois envie o comprovante no Discord para ativação. (Plano: <b>R$ 9,90</b> / 30 dias)</p>
+
+      <div class="section" style="padding-top:22px">
+        <div class="pricing" style="grid-template-columns: 1fr 1fr;">
+          <div class="price-card reveal">
+            <div class="price-inner">
+              <div class="price-top">
+                <div>
+                  <div class="plan">Pix (chave e-mail)</div>
+                  <div class="mini" style="margin-top:6px">Pague R$ 9,90</div>
+                </div>
+                <div class="badge">Recomendado</div>
+              </div>
+
+              <div style="margin-top:14px" class="mini">Chave Pix (e-mail)</div>
+              <div class="copyline">
+                <input id="pixKey" value="soaresstore2026@gmail.com" readonly />
+                <button class="btn btn-primary btn-small" onclick="copyText('pixKey','Chave Pix copiada ✅')">Copiar</button>
+              </div>
+
+              <div style="margin-top:12px" class="mini">
+                <b>Pix “Copia e Cola” (texto pronto)</b><br>
+                Cole no seu app bancário na opção Pix Copia e Cola.
+              </div>
+
+              <!-- IMPORTANTE:
+                   Para QR e Copia&Cola "real", você precisa de um payload EMV/BR Code.
+                   Aqui vai um exemplo placeholder. Substitua pelo seu payload real.
+              -->
+              <div class="copyline">
+                <textarea id="pixPayload" rows="4" readonly>00020126470014br.gov.bcb.pix0125soaresstore2026@gmail.com5204000053039865802BR5920Alisson Soares Nobre6008Brasilia62080504mpda6304F698</textarea>
+                <button class="btn btn-small" onclick="copyText('pixPayload','Pix Copia e Cola copiado ✅')">Copiar payload</button>
+              </div>
+
+              <div class="mini" style="margin-top:10px">
+                ✅ Depois de pagar, clique em “Enviar comprovante” e siga o passo a passo.
+              </div>
+
+              <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+                <a class="btn btn-primary" href="sucesso.html">Já paguei</a>
+                <a class="btn" href="como-ativar.html">Como ativar</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-card reveal">
+            <h3>QR Code</h3>
+            <p class="mini">O QR é gerado automaticamente a partir do “Copia e Cola”.</p>
+
+            <div class="qrwrap">
+              <div class="qr" id="qrBox">
+                <div class="mini">Cole um payload válido<br>para gerar QR</div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px" class="mini">
+              1) Pague<br>
+              2) Abra ticket no Discord<br>
+              3) Envie comprovante + seu usuário/ID<br>
+              4) Premium ativado
+            </div>
+
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+              <a class="btn btn-small btn-primary" href="https://discord.gg/PcBawDgXRW" target="_blank" rel="noreferrer">Enviar comprovante</a>
+              <a class="btn btn-small" href="termos.html">Termos</a>
+              <a class="btn btn-small" href="privacidade.html">Privacidade</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini" style="margin-top:10px">
+        ⚠️ Dica: se você não tiver o payload EMV, deixe só a <b>chave Pix</b> + valor e tire o QR/payload.  
+        Se quiser, eu te deixo o checkout “sem payload” (ainda premium).
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="font-weight:950; color:rgba(237,237,247,.9)">Nexor Premium</div>
+          <div style="margin-top:6px">Contato: <a href="mailto:soaresstore2026@gmail.com">soaresstore2026@gmail.com</a></div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="btn btn-small" href="index.html">Início</a>
+          <a class="btn btn-small" href="como-ativar.html">Como ativar</a>
+        </div>
+      </div>
+      <div style="margin-top:18px">© 2026 Nexor Premium.</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copiado ✅</div>
+
+  <!-- Gerador QR (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="assets/app.js"></script>
+  <script>
+    // Gera QR a partir do payload (se for válido)
+    function renderQR(){
+      const payload = (document.getElementById('pixPayload')?.value || '').trim();
+      const box = document.getElementById('qrBox');
+      if(!box) return;
+      box.innerHTML = '';
+
+      // Se ainda for placeholder, mostra aviso
+      if(payload === 'COLE_AQUI_SEU_PIX_COPIA_E_COLA_EMV'){
+        box.innerHTML = '<div class="mini">Cole um payload válido<br>para gerar QR</div>';
+        return;
+      }
+
+      new QRCode(box, {
+        text: payload,
+        width: 180,
+        height: 180
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderQR);
+  </script>
+</body>
+</html>
+
