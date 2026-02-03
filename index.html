@@ -1,111 +1,861 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>SoareS BOT</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SoareS BOT — Premium Automation</title>
+  <meta name="description" content="Uma experiência premium para servidores: automação, controle e desempenho com um visual clean e moderno." />
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0f;
-  color: white;
-}
+  <style>
+    :root{
+      --bg:#07070b;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.085);
+      --text:#EDEDF7;
+      --muted:rgba(237,237,247,.72);
+      --line: rgba(255,255,255,.10);
+      --brand:#7C5CFF;
+      --brand2:#2DE2E6;
+      --shadow: 0 25px 80px rgba(0,0,0,.55);
+      --radius: 18px;
+      --radius2: 26px;
+    }
 
-header {
-  padding: 80px 20px;
-  text-align: center;
-  background: linear-gradient(135deg,#6b4cff,#1b1b2f);
-}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", "Noto Sans", "Liberation Sans", sans-serif;
+      background:
+        radial-gradient(1000px 800px at 15% 15%, rgba(124,92,255,.22), transparent 60%),
+        radial-gradient(900px 700px at 80% 20%, rgba(45,226,230,.14), transparent 55%),
+        radial-gradient(900px 700px at 45% 90%, rgba(124,92,255,.12), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
 
-h1 {
-  font-size: 48px;
-}
+    /* Subtle noise */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity:.18;
+    }
 
-.btn {
-  display: inline-block;
-  padding: 14px 30px;
-  margin: 10px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: white;
-  background: #6b4cff;
-}
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1120px; margin:0 auto; padding:0 20px}
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border-radius:999px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      color:var(--muted);
+      font-size: 13px;
+      letter-spacing: .2px;
+    }
+    .dot{
+      width:9px; height:9px; border-radius:99px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--brand));
+      box-shadow: 0 0 18px rgba(124,92,255,.75);
+    }
 
-.section {
-  padding: 60px 20px;
-  max-width: 900px;
-  margin: auto;
-  text-align: center;
-}
+    /* NAV */
+    .nav{
+      position: sticky;
+      top:0; z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(7,7,11,.62);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      height:72px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(45,226,230,.75));
+      box-shadow: 0 18px 40px rgba(124,92,255,.25);
+      display:grid; place-items:center;
+      border: 1px solid rgba(255,255,255,.18);
+      overflow:hidden;
+    }
+    .logo img{width:100%; height:100%; object-fit:cover; display:block}
+    .nav-links{
+      display:flex; gap:18px; align-items:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .nav-links a{padding:10px 10px; border-radius:12px}
+    .nav-links a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+    .nav-cta{display:flex; gap:10px; align-items:center}
 
-.card {
-  background: #13131a;
-  padding: 25px;
-  border-radius: 12px;
-  margin: 15px 0;
-}
+    /* BUTTONS */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 16px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:600;
+      font-size:14px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.18)}
+    .btn-primary{
+      border:0;
+      background: linear-gradient(135deg, var(--brand), rgba(45,226,230,.65));
+      color:#05050a;
+      box-shadow: 0 18px 55px rgba(124,92,255,.28);
+    }
+    .btn-primary:hover{transform: translateY(-1px) scale(1.01)}
+    .btn-ghost{
+      background: transparent;
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .btn-small{padding:10px 14px; border-radius: 12px; font-size:13px}
 
-.price {
-  font-size: 42px;
-  color: #6b4cff;
-}
+    /* HERO */
+    .hero{
+      padding: 78px 0 34px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 26px;
+      align-items: center;
+    }
+    .h-title{
+      font-size: 54px;
+      line-height: 1.02;
+      margin: 18px 0 14px;
+      letter-spacing: -.8px;
+    }
+    .h-title span{
+      background: linear-gradient(135deg, #fff, rgba(237,237,247,.65));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .h-sub{
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+      margin: 0 0 22px;
+      max-width: 560px;
+    }
+    .hero-actions{display:flex; gap:12px; flex-wrap:wrap}
+    .hero-note{
+      margin-top: 16px;
+      color: rgba(237,237,247,.55);
+      font-size: 13px;
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+    }
+    .hero-note b{color: rgba(237,237,247,.84); font-weight:600}
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .panel:after{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(600px 300px at 30% 20%, rgba(124,92,255,.28), transparent 60%),
+                  radial-gradient(700px 320px at 75% 35%, rgba(45,226,230,.12), transparent 60%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .panel-inner{
+      position:relative; z-index:1;
+      padding: 18px;
+    }
+    .bot-card{
+      display:flex; align-items:center; gap:14px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .bot-avatar{
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+    }
+    .bot-avatar img{width:100%; height:100%; object-fit:cover; display:block}
+    .bot-meta{flex:1}
+    .bot-name{font-weight:750; letter-spacing:.2px}
+    .bot-tag{color: rgba(237,237,247,.62); font-size: 13px; margin-top:4px}
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .stat{
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .stat .k{font-size:12px; color: rgba(237,237,247,.58)}
+    .stat .v{margin-top:6px; font-size:16px; font-weight:700}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+    .chip{
+      padding: 9px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(237,237,247,.75);
+      font-size: 12px;
+    }
 
-footer {
-  padding: 20px;
-  text-align: center;
-  opacity: .6;
-}
-</style>
+    /* SECTIONS */
+    .section{padding: 64px 0}
+    .section-title{
+      font-size: 28px;
+      letter-spacing: -.3px;
+      margin: 0 0 12px;
+    }
+    .section-sub{
+      margin: 0 0 22px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 760px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.11);
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.16);
+    }
+    .card h3{margin: 0 0 8px; font-size: 16px}
+    .card p{margin:0; color: rgba(237,237,247,.68); line-height:1.6; font-size:14px}
+
+    /* PRICING */
+    .pricing{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items:stretch;
+    }
+    .price-card{
+      padding: 22px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .price-card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(700px 340px at 25% 15%, rgba(124,92,255,.32), transparent 60%),
+                  radial-gradient(700px 340px at 80% 40%, rgba(45,226,230,.12), transparent 60%);
+      opacity:.85;
+      pointer-events:none;
+    }
+    .price-inner{position:relative; z-index:1}
+    .price-top{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
+      flex-wrap:wrap;
+    }
+    .plan{font-weight:800; font-size:18px}
+    .badge{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(124,92,255,.18);
+      border:1px solid rgba(124,92,255,.28);
+      color: rgba(237,237,247,.85);
+    }
+    .price{
+      margin-top: 14px;
+      display:flex; align-items:flex-end; gap:10px; flex-wrap:wrap;
+    }
+    .price .big{font-size:48px; font-weight:900; letter-spacing:-.9px}
+    .price .per{color: rgba(237,237,247,.62)}
+    .list{margin-top:16px; display:grid; gap:10px}
+    .li{
+      display:flex; gap:10px; align-items:flex-start;
+      color: rgba(237,237,247,.75);
+      font-size: 14px;
+      line-height:1.5;
+    }
+    .check{
+      width:18px; height:18px; border-radius:6px;
+      background: rgba(45,226,230,.18);
+      border:1px solid rgba(45,226,230,.25);
+      box-shadow: 0 0 18px rgba(45,226,230,.16);
+      display:grid; place-items:center;
+      flex: 0 0 auto;
+      margin-top:2px;
+    }
+    .check svg{width:12px; height:12px}
+    .side-card{
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.11);
+    }
+    .side-card h3{margin:0 0 10px}
+    .side-card p{margin:0; color: rgba(237,237,247,.68); line-height:1.6; font-size:14px}
+
+    /* FAQ */
+    details{
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    details + details{margin-top:10px}
+    summary{
+      cursor:pointer;
+      font-weight:700;
+      color: rgba(237,237,247,.9);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color: rgba(237,237,247,.68); line-height:1.6; font-size:14px}
+
+    /* CTA */
+    .cta{
+      padding: 34px;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(124,92,255,.20), rgba(45,226,230,.10));
+      box-shadow: var(--shadow);
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 18px;
+      flex-wrap:wrap;
+    }
+    .cta h2{margin:0; font-size:24px}
+    .cta p{margin:6px 0 0; color: rgba(237,237,247,.7); line-height:1.6}
+
+    /* FOOTER */
+    .footer{
+      padding: 36px 0 44px;
+      color: rgba(237,237,247,.55);
+      border-top: 1px solid rgba(255,255,255,.08);
+      margin-top: 40px;
+    }
+    .footer-grid{
+      display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
+      align-items:center;
+    }
+    .footer a{color: rgba(237,237,247,.75)}
+    .footer a:hover{color: rgba(237,237,247,.95)}
+
+    /* MODAL */
+    .modal-backdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(8px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index: 60;
+      padding: 18px;
+    }
+    .modal{
+      width: min(620px, 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .modal:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(700px 340px at 25% 15%, rgba(124,92,255,.32), transparent 60%),
+                  radial-gradient(700px 340px at 80% 40%, rgba(45,226,230,.12), transparent 60%);
+      opacity:.85;
+      pointer-events:none;
+    }
+    .modal-inner{position:relative; z-index:1; padding: 18px}
+    .modal-top{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.10);
+      margin-bottom: 12px;
+    }
+    .modal-title{font-weight:850}
+    .x{
+      width:36px; height:36px; border-radius: 12px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+    }
+    .x:hover{background: rgba(255,255,255,.10)}
+    .modal-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .paybox{
+      padding: 16px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+    }
+    .row{display:flex; align-items:center; justify-content:space-between; gap: 10px; flex-wrap:wrap}
+    .k{color: rgba(237,237,247,.60); font-size:12px}
+    .v{font-weight:800}
+    .copyline{
+      margin-top: 10px;
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .copyline input{
+      flex: 1 1 260px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(237,237,247,.92);
+      outline:none;
+    }
+    .toast{
+      position:fixed;
+      left:50%; bottom:22px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.70);
+      border:1px solid rgba(255,255,255,.14);
+      color: rgba(237,237,247,.92);
+      padding: 10px 14px;
+      border-radius: 14px;
+      display:none;
+      z-index: 80;
+      backdrop-filter: blur(10px);
+    }
+
+    /* REVEAL */
+    .reveal{opacity:0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease}
+    .reveal.show{opacity:1; transform: translateY(0)}
+
+    /* RESPONSIVE */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns: 1fr; gap:18px}
+      .h-title{font-size: 44px}
+      .grid-3{grid-template-columns: 1fr}
+      .pricing{grid-template-columns: 1fr}
+      .nav-links{display:none}
+    }
+  </style>
 </head>
 
 <body>
+  <!-- NAV -->
+  <div class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a class="brand" href="#top" aria-label="SoareS BOT">
+          <div class="logo">
+            <img src="bot.png" alt="Logo do Bot" onerror="this.style.display='none'; this.parentElement.textContent='S'; this.parentElement.style.color='#05050a'; this.parentElement.style.fontWeight='900'">
+          </div>
+          <div>SoareS BOT</div>
+        </a>
 
-<header>
-<img src="bot.png" width="120"><br><br>
+        <div class="nav-links">
+          <a href="#beneficios">Benefícios</a>
+          <a href="#preco">Preço</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contato">Contato</a>
+        </div>
 
-<h1>SoareS BOT</h1>
+        <div class="nav-cta">
+          <a class="btn btn-small btn-ghost" href="https://discord.gg/PcBawDgXRW" target="_blank" rel="noreferrer">Discord</a>
+          <a class="btn btn-small btn-primary" href="https://discord.com/oauth2/authorize?client_id=1467877990779326484&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noreferrer">Convidar</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p>Automação moderna. Controle total. Experiência premium.</p>
+  <!-- HERO -->
+  <div id="top" class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="pill"><span class="dot"></span> Experiência premium • Plano mensal • Suporte no Discord</div>
 
-<a class="btn" href="https://discord.com/oauth2/authorize?client_id=1467877990779326484&permissions=8&integration_type=0&scope=bot+applications.commands">Convidar Bot</a>
+          <h1 class="h-title"><span>Automação premium</span><br>para elevar seu servidor.</h1>
+          <p class="h-sub">
+            O SoareS BOT entrega uma experiência clean e poderosa: organização, controle e confiabilidade —
+            com uma interface moderna e foco total em performance.
+          </p>
 
-<a class="btn" href="https://discord.gg/PcBawDgXRW">Servidor Discord</a>
-</header>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="openModal()">Comprar Premium</button>
+            <a class="btn" href="#preco">Ver preço</a>
+            <a class="btn btn-ghost" href="https://discord.gg/PcBawDgXRW" target="_blank" rel="noreferrer">Falar no Discord</a>
+          </div>
 
-<div class="section">
-<h2>Sobre</h2>
-<p>
-SoareS BOT foi criado para elevar o nível do seu servidor com tecnologia moderna,
-design limpo e recursos inteligentes.
-</p>
-</div>
+          <div class="hero-note">
+            <span>Pagamento via <b>Pix</b></span>
+            <span>•</span>
+            <span>Ativação via <b>ticket</b></span>
+            <span>•</span>
+            <span>Plano: <b>R$ 9,90/mês</b></span>
+          </div>
+        </div>
 
-<div class="section">
-<h2>Premium</h2>
+        <div class="panel reveal">
+          <div class="panel-inner">
+            <div class="bot-card">
+              <div class="bot-avatar">
+                <img src="bot.png" alt="SoareS BOT">
+              </div>
+              <div class="bot-meta">
+                <div class="bot-name">SoareS BOT</div>
+                <div class="bot-tag">Luxo • Clean • Confiável</div>
+              </div>
+              <a class="btn btn-small" href="https://discord.com/oauth2/authorize?client_id=1467877990779326484&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noreferrer">Add</a>
+            </div>
 
-<div class="card">Sistema inteligente de automação</div>
-<div class="card">Segurança avançada</div>
-<div class="card">Painel organizado</div>
-<div class="card">Atualizações constantes</div>
-<div class="card">Suporte dedicado</div>
+            <div class="stats">
+              <div class="stat">
+                <div class="k">Experiência</div>
+                <div class="v">Premium</div>
+              </div>
+              <div class="stat">
+                <div class="k">Modelo</div>
+                <div class="v">Mensal</div>
+              </div>
+              <div class="stat">
+                <div class="k">Suporte</div>
+                <div class="v">Discord</div>
+              </div>
+            </div>
 
-</div>
+            <div class="chips">
+              <div class="chip">Design moderno</div>
+              <div class="chip">Controle total</div>
+              <div class="chip">Organização</div>
+              <div class="chip">Segurança</div>
+              <div class="chip">Atualizações</div>
+            </div>
+          </div>
+        </div>
 
-<div class="section">
-<h2>Plano Mensal</h2>
+      </div>
+    </div>
+  </div>
 
-<div class="price">R$ 9,90</div>
-<p>por mês</p>
+  <!-- BENEFITS -->
+  <div id="beneficios" class="section">
+    <div class="container">
+      <h2 class="section-title reveal">Tudo com cara de premium.</h2>
+      <p class="section-sub reveal">
+        Um produto com presença. Uma experiência com acabamento. Você entrega um servidor mais organizado
+        e passa mais confiança na hora de vender, atender ou crescer a comunidade.
+      </p>
 
-<a class="btn" href="#">Comprar Premium</a>
-</div>
+      <div class="grid-3">
+        <div class="card reveal">
+          <h3>Visual clean e profissional</h3>
+          <p>Interface moderna, organização e uma identidade que combina com servidores sérios.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Performance e estabilidade</h3>
+          <p>Estrutura pensada para rodar leve, sem bagunça e com comportamento previsível.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Suporte e evolução</h3>
+          <p>Melhorias constantes e suporte pelo Discord para manter seu servidor sempre atualizado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<footer>
-Contato: soaresstore2026@gmail.com  
-<br><br>
-© 2026 SoareS BOT
-</footer>
+  <!-- PRICING -->
+  <div id="preco" class="section">
+    <div class="container">
+      <h2 class="section-title reveal">Plano mensal simples.</h2>
+      <p class="section-sub reveal">
+        Você paga mensalmente e mantém acesso ao Premium. Pagamento via Pix e ativação por ticket.
+      </p>
 
+      <div class="pricing">
+        <div class="price-card reveal">
+          <div class="price-inner">
+            <div class="price-top">
+              <div>
+                <div class="plan">Premium Mensal</div>
+                <div class="k" style="margin-top:6px">Acesso premium por 30 dias</div>
+              </div>
+              <div class="badge">Mais escolhido</div>
+            </div>
+
+            <div class="price">
+              <div class="big">R$ 9,90</div>
+              <div class="per">/ mês</div>
+            </div>
+
+            <div class="list">
+              <div class="li">
+                <div class="check">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                Recursos premium liberados
+              </div>
+              <div class="li">
+                <div class="check">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                Suporte pelo Discord
+              </div>
+              <div class="li">
+                <div class="check">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                Atualizações e melhorias
+              </div>
+            </div>
+
+            <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+              <button class="btn btn-primary" onclick="openModal()">Comprar Premium</button>
+              <a class="btn" href="https://discord.gg/PcBawDgXRW" target="_blank" rel="noreferrer">Abrir ticket</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-card reveal">
+          <h3>Como funciona?</h3>
+          <p>
+            1) Você paga via Pix<br>
+            2) Envia o comprovante no Discord<br>
+            3) A equipe ativa seu Premium por 30 dias
+          </p>
+
+          <div style="height:12px"></div>
+
+          <h3>Precisa ser automático?</h3>
+          <p>
+            Dá pra deixar semi-automático depois (validando ID/tx do Pix) ou totalmente automático quando você
+            tiver um gateway elegível.
+          </p>
+
+          <div style="height:12px"></div>
+
+          <a class="btn btn-small" href="#faq">Ver dúvidas comuns</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div id="faq" class="section">
+    <div class="container">
+      <h2 class="section-title reveal">Dúvidas rápidas</h2>
+      <p class="section-sub reveal">Respostas diretas para você comprar sem dor de cabeça.</p>
+
+      <details class="reveal">
+        <summary>Quanto tempo para ativar?</summary>
+        <p>Assim que você enviar o comprovante no ticket, a ativação é feita o quanto antes (depende do horário do suporte).</p>
+      </details>
+
+      <details class="reveal">
+        <summary>O Premium dura quanto?</summary>
+        <p>30 dias. Quando acabar, você renova com um novo pagamento mensal.</p>
+      </details>
+
+      <details class="reveal">
+        <summary>Posso cancelar quando quiser?</summary>
+        <p>Sim. Basta não renovar no próximo mês.</p>
+      </details>
+
+      <details class="reveal">
+        <summary>Onde eu mando o comprovante?</summary>
+        <p>No Discord. Clique em “Abrir ticket” e envie o comprovante no atendimento.</p>
+      </details>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section">
+    <div class="container">
+      <div class="cta reveal">
+        <div>
+          <h2>Pronto pra ter uma experiência premium?</h2>
+          <p>Convide o bot agora ou compre o Premium e ative pelo ticket.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1467877990779326484&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noreferrer">Convidar bot</a>
+          <button class="btn btn-primary" onclick="openModal()">Comprar Premium</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div id="contato" class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="font-weight:800; color:rgba(237,237,247,.9)">SoareS BOT</div>
+          <div style="margin-top:6px">Contato: <a href="mailto:soaresstore2026@gmail.com">soaresstore2026@gmail.com</a></div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="btn btn-small" href="https://discord.gg/PcBawDgXRW" target="_blank" rel="noreferrer">Discord</a>
+          <a class="btn btn-small" href="https://discord.com/oauth2/authorize?client_id=1467877990779326484&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noreferrer">Convidar</a>
+        </div>
+      </div>
+      <div style="margin-top:18px">© 2026 SoareS BOT. Todos os direitos reservados.</div>
+    </div>
+  </div>
+
+  <!-- MODAL: Pix -->
+  <div class="modal-backdrop" id="payModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Comprar Premium">
+      <div class="modal-inner">
+        <div class="modal-top">
+          <div>
+            <div class="modal-title">Comprar Premium</div>
+            <div class="k">Pix + ativação no Discord</div>
+          </div>
+          <div class="x" onclick="closeModal()" title="Fechar">✕</div>
+        </div>
+
+        <div class="modal-grid">
+          <div class="paybox">
+            <div class="row">
+              <div>
+                <div class="k">Plano</div>
+                <div class="v">Premium Mensal (30 dias)</div>
+              </div>
+              <div style="text-align:right">
+                <div class="k">Valor</div>
+                <div class="v">R$ 9,90</div>
+              </div>
+            </div>
+
+            <div style="height:10px"></div>
+
+            <div class="k">Chave Pix (e-mail)</div>
+            <div class="copyline">
+              <input id="pixKey" value="soaresstore2026@gmail.com" readonly />
+              <button class="btn btn-small btn-primary" onclick="copyPix()">Copiar</button>
+              <a class="btn btn-small" href="https://discord.gg/PcBawDgXRW" target="_blank" rel="noreferrer">Abrir ticket</a>
+            </div>
+
+            <div style="margin-top:10px; color:rgba(237,237,247,.68); font-size:13px; line-height:1.55">
+              Depois do pagamento, envie o comprovante no ticket do Discord para ativar o Premium.
+            </div>
+          </div>
+
+          <div class="paybox">
+            <div class="k">Passo a passo</div>
+            <div style="margin-top:8px; color:rgba(237,237,247,.72); font-size:13px; line-height:1.6">
+              1) Copie a chave Pix e pague <b>R$ 9,90</b><br>
+              2) Abra um ticket no Discord<br>
+              3) Envie o comprovante + seu usuário/ID<br>
+              4) Premium liberado
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+              <a class="btn btn-primary" href="https://discord.gg/PcBawDgXRW" target="_blank" rel="noreferrer">Enviar comprovante</a>
+              <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1467877990779326484&permissions=8&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noreferrer">Convidar bot</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Chave Pix copiada ✅</div>
+
+  <script>
+    // Modal
+    const modal = document.getElementById('payModal');
+
+    function openModal(){
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+    });
+
+    // Copy Pix
+    const toast = document.getElementById('toast');
+    function showToast(){
+      toast.style.display = 'block';
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=> toast.style.display = 'none', 1600);
+    }
+    async function copyPix(){
+      const input = document.getElementById('pixKey');
+      input.select();
+      input.setSelectionRange(0, 99999);
+      try{
+        await navigator.clipboard.writeText(input.value);
+        showToast();
+      }catch(err){
+        // fallback
+        document.execCommand('copy');
+        showToast();
+      }
+    }
+
+    // Scroll reveal
+    const items = Array.from(document.querySelectorAll('.reveal'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if(en.isIntersecting){
+          en.target.classList.add('show');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    items.forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
