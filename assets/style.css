@@ -231,7 +231,7 @@ hr.sep{
   border: 1px solid rgba(255,255,255,.10);
 }
 .stat .k{font-size:12px; color: rgba(237,237,247,.58)}
-.stat .v{margin-top:6px; font-size:16px; font-weight:1000}
+.stat .v{margin-top:6px; font-size:16px; font-weight:1100}
 
 .section{padding: 64px 0}
 .section-title{font-size: 28px; letter-spacing: -.3px; margin: 0 0 12px}
@@ -294,7 +294,7 @@ hr.sep{
 .price-inner{position:relative; z-index:1}
 .price-top{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap}
 
-.plan{font-weight:1000; font-size:18px}
+.plan{font-weight:1100; font-size:18px}
 
 .badge{
   font-size:12px; padding:8px 10px; border-radius:999px;
@@ -327,7 +327,7 @@ hr.sep{
   background: rgba(255,255,255,.05);
   border: 1px solid rgba(255,255,255,.11);
 }
-.side-card h3{margin:0 0 10px; font-weight:1000}
+.side-card h3{margin:0 0 10px; font-weight:1100}
 .side-card p{margin:0; color: rgba(237,237,247,.68); line-height:1.6; font-size:14px}
 
 details{
@@ -337,7 +337,7 @@ details{
   padding: 14px 16px;
 }
 details + details{margin-top:10px}
-summary{cursor:pointer; font-weight:1000; color: rgba(237,237,247,.92); list-style:none}
+summary{cursor:pointer; font-weight:1100; color: rgba(237,237,247,.92); list-style:none}
 summary::-webkit-details-marker{display:none}
 details p{margin:10px 0 0; color: rgba(237,237,247,.68); line-height:1.6; font-size:14px}
 
@@ -419,17 +419,6 @@ details p{margin:10px 0 0; color: rgba(237,237,247,.68); line-height:1.6; font-s
 .tbox .n{font-size:18px; font-weight:1100}
 .tbox .l{font-size:12px; color: rgba(237,237,247,.62); margin-top:4px}
 
-.qrwrap{display:flex; gap:14px; flex-wrap:wrap; align-items:flex-start; margin-top: 12px}
-.qr{
-  width: 210px; height: 210px;
-  border-radius: 18px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.22);
-  display:grid; place-items:center;
-  overflow:hidden;
-}
-.qr canvas, .qr img{max-width: 92%; max-height: 92%}
-
 .page{padding: 40px 0 10px}
 .page h1{margin:0 0 10px; font-size: 34px; letter-spacing:-.4px; font-weight:1100}
 .page p{margin:0; color: rgba(237,237,247,.70); line-height:1.7}
@@ -456,7 +445,7 @@ blockquote.quote{
 }
 .quote .who{
   margin-top:10px;
-  font-weight:1000;
+  font-weight:1100;
   color: rgba(237,237,247,.92);
   font-size: 13px;
 }
@@ -465,8 +454,87 @@ blockquote.quote{
   gap:4px;
   margin-bottom:8px;
   color: rgba(243,211,139,.90);
-  font-weight:1000;
+  font-weight:1100;
   font-size: 13px;
+}
+
+/* ===== Testimonials Pro ===== */
+.t-wrap{position:relative; overflow:hidden}
+.t-track{
+  display:flex; gap:14px;
+  transition: transform .55s ease;
+  will-change: transform;
+}
+.t-card{
+  min-width: min(560px, 92vw);
+  flex: 0 0 auto;
+}
+.avatar{
+  width:44px; height:44px;
+  border-radius: 14px;
+  display:grid; place-items:center;
+  font-weight:1100;
+  letter-spacing:.2px;
+  color:#06060b;
+  background: linear-gradient(135deg, rgba(243,211,139,.95), rgba(45,226,230,.70));
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 14px 34px rgba(0,0,0,.35);
+}
+.who-row{
+  display:flex; align-items:center; gap:12px;
+  margin-top: 10px;
+}
+.who-meta{line-height:1.2}
+.who-name{
+  font-weight:1100;
+  color: rgba(237,237,247,.92);
+  font-size: 13px;
+}
+.who-role{
+  margin-top:4px;
+  color: rgba(237,237,247,.62);
+  font-weight:900;
+  font-size: 12px;
+}
+.badge-verify{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight:1100;
+  background: rgba(45,226,230,.12);
+  border: 1px solid rgba(45,226,230,.22);
+  color: rgba(237,237,247,.90);
+}
+.badge-verify .v{
+  width:10px; height:10px; border-radius:999px;
+  background: rgba(45,226,230,.85);
+  box-shadow: 0 0 18px rgba(45,226,230,.28);
+}
+.t-dots{
+  display:flex; gap:8px;
+  align-items:center; justify-content:center;
+  flex-wrap:wrap;
+  margin-top: 12px;
+}
+.t-dot{
+  appearance:none;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: rgba(237,237,247,.75);
+  font-weight:1100;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  cursor:pointer;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+  opacity: .6;
+}
+.t-dot:hover{transform: translateY(-1px); opacity:.9}
+.t-dot.active{
+  opacity: 1;
+  background: rgba(255,255,255,.085);
+  border-color: rgba(255,255,255,.22);
 }
 
 @media (max-width: 980px){
