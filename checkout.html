@@ -4,8 +4,37 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Checkout — Nexor Premium</title>
-  <meta name="description" content="Checkout Pix do Nexor Premium com copiar chave, payload e QR."/>
+  <meta name="description" content="Checkout Pix do Nexor Premium com QR, copiar chave e Pix Copia e Cola."/>
   <link rel="stylesheet" href="assets/style.css"/>
+
+  <style>
+    /* refinamento extra só do checkout */
+    .secure-row{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:10px;
+      color: rgba(237,237,247,.70);
+      font-size: 13px;
+    }
+    .secure-pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+    }
+    .secure-dot{
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(45,226,230,.75);
+      box-shadow: 0 0 18px rgba(45,226,230,.22);
+    }
+    .hidden-box{ display:none; }
+    .divider{
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+      margin: 14px 0;
+      border:0;
+    }
+  </style>
 </head>
 <body>
   <div class="nav">
@@ -28,18 +57,25 @@
     <div class="container">
       <div class="pill"><span class="dot"></span> Checkout Pix • Ativação via ticket</div>
       <h1 style="margin-top:14px">Checkout</h1>
-      <p>Pague o Pix e depois envie o comprovante no Discord. Plano: <b>R$ 9,90</b> (30 dias).</p>
+      <p>Pague via Pix e envie o comprovante no Discord para ativação. Plano: <b>R$ 9,90</b> (30 dias).</p>
+
+      <div class="secure-row">
+        <div class="secure-pill"><span class="secure-dot"></span> Suporte no Discord</div>
+        <div class="secure-pill"><span class="secure-dot"></span> Ativação prioritária (tempo limitado)</div>
+        <div class="secure-pill"><span class="secure-dot"></span> Compra simples: Pix + ticket</div>
+      </div>
 
       <div class="section" style="padding-top:22px">
         <div class="pricing" style="grid-template-columns: 1fr 1fr;">
+          <!-- COLUNA 1 -->
           <div class="price-card reveal">
             <div class="price-inner">
               <div class="price-top">
                 <div>
                   <div class="plan">Pix (chave e-mail)</div>
-                  <div class="mini" style="margin-top:6px">Pagamento rápido e simples</div>
+                  <div class="mini" style="margin-top:6px">Pagamento rápido e direto</div>
                 </div>
-                <div class="badge">Ativação prioritária</div>
+                <div class="badge">Premium Mensal</div>
               </div>
 
               <div class="price" style="margin-top:10px">
@@ -47,25 +83,34 @@
                 <div class="per">/ 30 dias</div>
               </div>
 
-              <div style="margin-top:10px" class="mini">Chave Pix (e-mail)</div>
+              <hr class="divider"/>
+
+              <div class="mini">Chave Pix (e-mail)</div>
               <div class="copyline">
                 <input id="pixKey" value="soaresstore2026@gmail.com" readonly />
                 <button class="btn btn-primary btn-small" onclick="copyText('pixKey','Chave Pix copiada ✅')">Copiar</button>
               </div>
 
-              <div style="margin-top:14px" class="mini">
-                <b>Pix Copia e Cola (texto pronto)</b><br>
-                Se você tiver o payload EMV, cole aqui para gerar QR automaticamente.
+              <div class="mini" style="margin-top:12px">
+                <b>Dica premium:</b> se seu banco permitir, pague pelo <b>QR</b> (mais rápido).  
+                Se preferir, use o <b>Pix Copia e Cola</b> abaixo.
               </div>
 
-              <!-- Coloque seu payload EMV real aqui quando tiver -->
-              <div class="copyline">
-                <textarea id="pixPayload" rows="4" readonly>COLE_AQUI_SEU_PIX_COPIA_E_COLA_EMV</textarea>
-                <button class="btn btn-small" onclick="copyText('pixPayload','Pix Copia e Cola copiado ✅')">Copiar payload</button>
+              <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+                <button class="btn btn-small" onclick="togglePayload()">Mostrar Pix Copia e Cola</button>
+                <button class="btn btn-small btn-ghost" onclick="copyPayloadQuick()">Copiar Pix Copia e Cola</button>
               </div>
 
-              <div class="mini" style="margin-top:10px">
-                Depois de pagar, clique em <b>“Já paguei”</b> e envie o comprovante no ticket.
+              <!-- Payload escondido por padrão -->
+              <div id="payloadBox" class="hidden-box" style="margin-top:12px">
+                <div class="mini"><b>Pix Copia e Cola</b> (cole no seu app)</div>
+                <div class="copyline">
+                  <textarea id="pixPayload" rows="4" readonly>00020126470014br.gov.bcb.pix0125soaresstore2026@gmail.com5204000053039865802BR5920Alisson Soares Nobre6008Brasilia62080504mpda6304F698</textarea>
+                  <button class="btn btn-small" onclick="copyText('pixPayload','Pix Copia e Cola copiado ✅')">Copiar</button>
+                </div>
+                <div class="mini" style="margin-top:8px">
+                  Depois de pagar, clique em <b>“Já paguei”</b> e envie o comprovante no ticket.
+                </div>
               </div>
 
               <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
@@ -75,18 +120,19 @@
             </div>
           </div>
 
+          <!-- COLUNA 2 -->
           <div class="side-card reveal">
-            <h3>QR Code</h3>
-            <p class="mini">O QR é gerado a partir do “Copia e Cola”. (Precisa de payload válido.)</p>
+            <h3>QR Code Pix</h3>
+            <p class="mini">Escaneie para pagar. (Gerado automaticamente.)</p>
 
             <div class="qrwrap">
               <div class="qr" id="qrBox">
-                <div class="mini">Cole um payload válido<br>para gerar QR</div>
+                <div class="mini">Gerando QR…</div>
               </div>
             </div>
 
             <div style="margin-top:12px" class="mini">
-              <b>Passo a passo</b><br>
+              <b>Ativação em 4 passos</b><br>
               1) Pague<br>
               2) Abra ticket no Discord<br>
               3) Envie comprovante + usuário/ID<br>
@@ -98,13 +144,17 @@
               <a class="btn btn-small" href="termos.html">Termos</a>
               <a class="btn btn-small" href="privacidade.html">Privacidade</a>
             </div>
+
+            <div class="mini" style="margin-top:12px">
+              <b>Recomendação:</b> no ticket, envie também o horário do pagamento e valor (R$ 9,90).
+            </div>
           </div>
         </div>
       </div>
 
       <div class="mini" style="margin-top:10px">
-        Se você não tiver payload EMV, pode manter apenas a <b>chave Pix</b> (o checkout continua premium).  
-        Quando você tiver o payload, basta substituir o texto “COLE_AQUI…” e o QR passa a funcionar.
+        Observação: o Pix Copia e Cola pode exibir nome/cidade no app do banco (normal do Pix).  
+        Aqui no site, ele fica escondido por padrão para manter a experiência mais premium.
       </div>
     </div>
   </div>
@@ -130,19 +180,39 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script src="assets/app.js"></script>
   <script>
+    function togglePayload(){
+      const box = document.getElementById('payloadBox');
+      const btn = event?.target;
+      const open = box.style.display === 'block';
+      box.style.display = open ? 'none' : 'block';
+      if(btn) btn.textContent = open ? 'Mostrar Pix Copia e Cola' : 'Esconder Pix Copia e Cola';
+    }
+
+    function copyPayloadQuick(){
+      // copia mesmo se estiver escondido
+      const payload = document.getElementById('pixPayload')?.value?.trim();
+      if(!payload){ showToast('Payload não encontrado'); return; }
+      navigator.clipboard.writeText(payload).then(()=>{
+        showToast('Pix Copia e Cola copiado ✅');
+      }).catch(()=>{
+        // fallback
+        const ta = document.getElementById('pixPayload');
+        ta.style.display = 'block';
+        ta.select();
+        document.execCommand('copy');
+        ta.style.display = '';
+        showToast('Pix Copia e Cola copiado ✅');
+      });
+    }
+
     function renderQR(){
       const payload = (document.getElementById('pixPayload')?.value || '').trim();
       const box = document.getElementById('qrBox');
       if(!box) return;
       box.innerHTML = '';
-
-      if(payload === 'COLE_AQUI_SEU_PIX_COPIA_E_COLA_EMV'){
-        box.innerHTML = '<div class="mini">Cole um payload válido<br>para gerar QR</div>';
-        return;
-      }
-
       new QRCode(box, { text: payload, width: 190, height: 190 });
     }
+
     document.addEventListener('DOMContentLoaded', renderQR);
   </script>
 </body>
